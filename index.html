@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shroud — Serverless P2P encrypted messenger</title>
+  <meta name="description" content="Serverless end-to-end encrypted messenger routed through Tor. No servers, no accounts, no metadata left behind." />
+  <meta property="og:title" content="Shroud" />
+  <meta property="og:description" content="Serverless end-to-end encrypted messenger routed through Tor." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="logo.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="#top">
+      <img class="brand-icon" src="logo.png" alt="" aria-hidden="true" width="24" height="24" />
+      <span>Shroud</span>
+    </a>
+    <div class="nav-right">
+      <a href="#download" data-i18n="nav.download">Download</a>
+      <select id="lang-select" aria-label="Language">
+        <option value="en">English</option>
+        <option value="uk">Українська</option>
+        <option value="es">Español</option>
+        <option value="de">Deutsch</option>
+        <option value="fr">Français</option>
+        <option value="pt">Português</option>
+        <option value="pl">Polski</option>
+        <option value="tr">Türkçe</option>
+        <option value="zh">中文</option>
+      </select>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <div class="hero-logo">
+        <img src="logo.png" alt="Shroud" width="128" height="128" />
+      </div>
+      <h1>Shroud</h1>
+      <p class="tagline" data-i18n="hero.tagline">
+        Serverless, end-to-end encrypted messenger.
+      </p>
+      <p class="subtitle" data-i18n="hero.subtitle">
+        Messages, calls and files routed through Tor. No servers, no accounts, no metadata left behind.
+      </p>
+      <div class="hero-cta">
+        <a id="download-primary" class="btn btn-primary" href="#download">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="7 10 12 15 17 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span id="download-label" data-i18n="hero.download">Download for Windows</span>
+        </a>
+      </div>
+      <p class="hero-version" id="hero-version" aria-live="polite"></p>
+    </div>
+  </header>
+
+  <section class="features">
+    <h2 data-i18n="features.title">Why Shroud?</h2>
+    <div class="feature-grid">
+      <div class="card">
+        <div class="card-icon">🕸</div>
+        <h3 data-i18n="features.serverless.title">No servers</h3>
+        <p data-i18n="features.serverless.body">Everything travels peer-to-peer through Tor hidden services. There's no backend to breach, subpoena, or shut down.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <h3 data-i18n="features.e2e.title">End-to-end encrypted</h3>
+        <p data-i18n="features.e2e.body">Ed25519 signatures, XChaCha20-Poly1305 AEAD, Argon2id password hashing. Your keys live only on your device.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎙</div>
+        <h3 data-i18n="features.voice.title">Voice over Tor</h3>
+        <p data-i18n="features.voice.body">Calls use the same signed-envelope channel as text. No WebRTC, no STUN, no TURN — your IP never leaks.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🆔</div>
+        <h3 data-i18n="features.identity.title">No accounts</h3>
+        <p data-i18n="features.identity.body">Your identity is a .onion address generated locally on first launch. Nothing to sign up for, nothing to verify.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡</div>
+        <h3 data-i18n="features.tofu.title">Verified contacts</h3>
+        <p data-i18n="features.tofu.body">Your first signed message from each contact pins their public key. Anyone spoofing the address later is detected and blocked.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3 data-i18n="features.i18n.title">9 languages</h3>
+        <p data-i18n="features.i18n.body">English, Ukrainian, Spanish, German, French, Portuguese, Polish, Turkish, Chinese — and growing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2 data-i18n="how.title">How it works</h2>
+    <ol class="steps">
+      <li>
+        <span class="step-num">1</span>
+        <h3 data-i18n="how.step1.title">Install &amp; launch</h3>
+        <p data-i18n="how.step1.body">Tor is bundled with the installer. On first run, Shroud generates your keys and a .onion address locally.</p>
+      </li>
+      <li>
+        <span class="step-num">2</span>
+        <h3 data-i18n="how.step2.title">Share your address</h3>
+        <p data-i18n="how.step2.body">Send your .onion address to whoever you want to chat with — it's a 56-character string, unique to you.</p>
+      </li>
+      <li>
+        <span class="step-num">3</span>
+        <h3 data-i18n="how.step3.title">Talk</h3>
+        <p data-i18n="how.step3.body">Messages, files, voice calls — all signed, encrypted, and routed through Tor. No third party can see who you're talking to.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="platforms" id="download">
+    <h2 data-i18n="platforms.title">Downloads</h2>
+    <div class="platform-grid">
+      <a id="platform-windows" class="platform platform-available" href="#" target="_blank" rel="noopener">
+        <div class="platform-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3.5L10 2.5v8.5H2V3.5zm0 17V12h8v8.5l-8-1zm9-17.5L22 2v10H11V3zm0 17.5V13h11v8.5L11 20z" fill="currentColor"/></svg>
+        </div>
+        <div class="platform-meta">
+          <h3>Windows</h3>
+          <p id="platform-windows-sub" data-i18n="platforms.available">Available now</p>
+        </div>
+      </a>
+      <div class="platform platform-soon">
+        <div class="platform-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 3c.1 1.4-.5 2.7-1.4 3.6-.9.9-2.2 1.6-3.5 1.5-.1-1.3.5-2.6 1.4-3.5.9-1 2.2-1.6 3.5-1.6zm3.4 14.8c-.8 1.9-1.2 2.8-2.3 4.5-1.5 2.3-3.6 5.2-6.3 5.2-2.4 0-3-1.6-6.3-1.6-3.2.1-3.9 1.6-6.3 1.6C-.5 27.5-2.6 24.8-4 22.5c-4-6.5-4.4-14-1.9-18 1.7-2.8 4.4-4.5 7-4.5 2.6 0 4.3 1.5 6.4 1.5 2.1 0 3.4-1.5 6.4-1.5 2.3 0 4.8 1.2 6.5 3.4-5.7 3.1-4.8 11.3.5 14.4z" fill="currentColor" transform="translate(4 0)"/></svg>
+        </div>
+        <div class="platform-meta">
+          <h3>macOS</h3>
+          <p data-i18n="platforms.soon">Coming soon</p>
+        </div>
+      </div>
+      <div class="platform platform-soon">
+        <div class="platform-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 0 2 .5 2.5 1.3l-1.2 1.6c-.3-.2-.7-.3-1.3-.3s-1 .1-1.3.3L9.5 3.3C10 2.5 11 2 12 2zm-6 9h12v2H6v-2zm-2 4c0-1.1.9-2 2-2h12c1.1 0 2 .9 2 2v6c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2v-6zm3 2v4h2v-4H7zm8 0v4h2v-4h-2zM7 8c0-2.8 2.2-5 5-5s5 2.2 5 5H7z" fill="currentColor"/></svg>
+        </div>
+        <div class="platform-meta">
+          <h3>Android</h3>
+          <p data-i18n="platforms.soon">Coming soon</p>
+        </div>
+      </div>
+      <div class="platform platform-soon">
+        <div class="platform-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-5 19c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm5-3H7V4h10v14z" fill="currentColor"/></svg>
+        </div>
+        <div class="platform-meta">
+          <h3>iOS</h3>
+          <p data-i18n="platforms.soon">Coming soon</p>
+        </div>
+      </div>
+      <div class="platform platform-soon">
+        <div class="platform-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C9.8 2 8 3.8 8 6v2h8V6c0-2.2-1.8-4-4-4zm-4 8c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2H8z" fill="currentColor"/></svg>
+        </div>
+        <div class="platform-meta">
+          <h3>Linux</h3>
+          <p data-i18n="platforms.soon">Coming soon</p>
+        </div>
+      </div>
+    </div>
+    <p class="platforms-note" data-i18n="platforms.note">
+      Installers are cryptographically signed. Every update is verified on your device before being applied.
+    </p>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img class="brand-icon" src="logo.png" alt="" aria-hidden="true" width="20" height="20" />
+        <span>Shroud</span>
+      </div>
+      <div class="footer-links">
+        <a href="#download" data-i18n="nav.download">Download</a>
+        <a href="#top" data-i18n="footer.backToTop">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
