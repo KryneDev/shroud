@@ -49,10 +49,15 @@ function setupLangSelector() {
 }
 
 async function fetchLatestRelease() {
-  const btn = document.getElementById("platform-windows");
-  const sub = document.getElementById("platform-windows-sub");
+  const winBtn = document.getElementById("platform-windows");
+  const winSub = document.getElementById("platform-windows-sub");
+  const andBtn = document.getElementById("platform-android");
+  const andSub = document.getElementById("platform-android-sub");
   const heroBtn = document.getElementById("download-primary");
   const heroVer = document.getElementById("hero-version");
+
+  // Detect Android visitors so the hero CTA points to the APK by default.
+  const isAndroid = /Android/i.test(navigator.userAgent);
 
   try {
     const res = await fetch(
@@ -62,31 +67,43 @@ async function fetchLatestRelease() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
 
-    const asset = (data.assets || []).find((a) =>
+    const winAsset = (data.assets || []).find((a) =>
       /_x64-setup\.exe$/i.test(a.name),
     );
-    if (!asset) {
-      // Fall back to the releases landing page so users at least see the
-      // list of published builds.
-      const url = data.html_url || `https://github.com/${RELEASES_REPO}/releases`;
-      btn.href = url;
-      heroBtn.href = url;
-      return;
+    // APK naming is currently "Shroud_<ver>_universal.apk" or similar —
+    // match anything ending in .apk so we don't bind to a strict pattern.
+    const apkAsset = (data.assets || []).find((a) => /\.apk$/i.test(a.name));
+
+    const releasesPage = data.html_url || `https://github.com/${RELEASES_REPO}/releases`;
+    if (winBtn) winBtn.href = winAsset?.browser_download_url ?? releasesPage;
+    if (andBtn) andBtn.href = apkAsset?.browser_download_url ?? releasesPage;
+
+    // Hero button: pick the binary for the visitor's device. Falls back to
+    // the Windows installer (still the default platform) if no APK is
+    // available, then to the releases page if that's also missing.
+    const heroAsset =
+      isAndroid && apkAsset
+        ? apkAsset
+        : winAsset ?? apkAsset;
+    if (heroBtn) heroBtn.href = heroAsset?.browser_download_url ?? releasesPage;
+
+    // Switch the hero button label when we're sending the visitor to Android.
+    if (isAndroid && apkAsset) {
+      const heroLabel = document.getElementById("download-label");
+      if (heroLabel) heroLabel.textContent = heroLabel.dataset.androidLabel || "Download for Android";
     }
 
-    btn.href = asset.browser_download_url;
-    heroBtn.href = asset.browser_download_url;
     const version = data.tag_name?.replace(/^v/, "") || data.name || "";
     if (version) {
-      if (sub) sub.textContent = `v${version}`;
+      if (winSub) winSub.textContent = `v${version}`;
+      if (andSub) andSub.textContent = apkAsset ? `v${version}` : andSub.textContent;
       if (heroVer) heroVer.textContent = `v${version}`;
     }
   } catch (err) {
-    // Leave the href pointing at #download — user can still scroll. Don't
-    // block UI on the API being reachable.
     console.warn("release fetch failed:", err);
     const fallback = `https://github.com/${RELEASES_REPO}/releases`;
-    if (btn) btn.href = fallback;
+    if (winBtn) winBtn.href = fallback;
+    if (andBtn) andBtn.href = fallback;
     if (heroBtn) heroBtn.href = fallback;
   }
 }
