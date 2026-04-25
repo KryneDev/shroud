@@ -53,10 +53,11 @@ async function fetchLatestRelease() {
   const winSub = document.getElementById("platform-windows-sub");
   const andBtn = document.getElementById("platform-android");
   const andSub = document.getElementById("platform-android-sub");
-  const heroBtn = document.getElementById("download-primary");
+  const heroWin = document.getElementById("download-primary");
+  const heroAnd = document.getElementById("download-android");
   const heroVer = document.getElementById("hero-version");
 
-  // Detect Android visitors so the hero CTA points to the APK by default.
+  // Detect Android visitors so we can swap which hero button is the primary.
   const isAndroid = /Android/i.test(navigator.userAgent);
 
   try {
@@ -70,27 +71,26 @@ async function fetchLatestRelease() {
     const winAsset = (data.assets || []).find((a) =>
       /_x64-setup\.exe$/i.test(a.name),
     );
-    // APK naming is currently "Shroud_<ver>_universal.apk" or similar —
-    // match anything ending in .apk so we don't bind to a strict pattern.
+    // APK naming is currently "Shroud-<ver>.apk" — match anything
+    // ending in .apk so we don't bind to a strict filename.
     const apkAsset = (data.assets || []).find((a) => /\.apk$/i.test(a.name));
 
     const releasesPage = data.html_url || `https://github.com/${RELEASES_REPO}/releases`;
+
+    // Wire up the platform tiles + the two hero buttons. If a particular
+    // build is missing from the release, the tile/button falls back to the
+    // releases page (so the user at least sees what IS available).
     if (winBtn) winBtn.href = winAsset?.browser_download_url ?? releasesPage;
     if (andBtn) andBtn.href = apkAsset?.browser_download_url ?? releasesPage;
+    if (heroWin) heroWin.href = winAsset?.browser_download_url ?? releasesPage;
+    if (heroAnd) heroAnd.href = apkAsset?.browser_download_url ?? releasesPage;
 
-    // Hero button: pick the binary for the visitor's device. Falls back to
-    // the Windows installer (still the default platform) if no APK is
-    // available, then to the releases page if that's also missing.
-    const heroAsset =
-      isAndroid && apkAsset
-        ? apkAsset
-        : winAsset ?? apkAsset;
-    if (heroBtn) heroBtn.href = heroAsset?.browser_download_url ?? releasesPage;
-
-    // Switch the hero button label when we're sending the visitor to Android.
-    if (isAndroid && apkAsset) {
-      const heroLabel = document.getElementById("download-label");
-      if (heroLabel) heroLabel.textContent = heroLabel.dataset.androidLabel || "Download for Android";
+    // On Android phones the secondary "Windows" CTA is just clutter — hide
+    // it and promote the Android button to the primary visual treatment.
+    if (isAndroid && heroWin && heroAnd) {
+      heroWin.style.display = "none";
+      heroAnd.classList.remove("btn-secondary");
+      heroAnd.classList.add("btn-primary");
     }
 
     const version = data.tag_name?.replace(/^v/, "") || data.name || "";
@@ -104,7 +104,8 @@ async function fetchLatestRelease() {
     const fallback = `https://github.com/${RELEASES_REPO}/releases`;
     if (winBtn) winBtn.href = fallback;
     if (andBtn) andBtn.href = fallback;
-    if (heroBtn) heroBtn.href = fallback;
+    if (heroWin) heroWin.href = fallback;
+    if (heroAnd) heroAnd.href = fallback;
   }
 }
 
